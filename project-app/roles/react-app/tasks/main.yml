@@ -1,0 +1,53 @@
+---
+# tasks file for react-app
+
+- name: Create WORKDIR
+  file:
+    path: /usr/src/app/react
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- block:
+  - name: Install tar, rsync and sudo (Alipne)
+    apk:
+      name: "{{item}}"
+      state: latest
+      update_cache: yes
+    loop:
+      - tar
+      - rsync
+      - sudo
+  when: ansible_os_family == "Alpine"
+
+- block:
+  - name: Install rsync and sudo (Debian)
+    apt:
+      name: "{{item}}"
+      state: present
+    loop:
+      - rsync
+      - sudo
+  when: ansible_facts['os_family'] == "Debian"
+
+- block:
+  - name: Install rsync and sudo (Centos)
+    yum:
+      name: "{{item}}"
+      state: present
+    loop:
+      - rsync
+      - sudo
+  when: ansible_facts['os_family'] == "RedHat"
+
+- name: Unarchive project files
+  unarchive:
+    src: app-react.tar.gz
+    dest: /usr/src/app/react
+
+#- name: Unarchive project files
+#  unarchive:
+#    src: react_box.tar.gz
+#    dest: /usr/src/app/react
+

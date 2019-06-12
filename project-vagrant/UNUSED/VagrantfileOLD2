@@ -1,0 +1,73 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+VAGRANTFILE_API_VERSION = "2"
+	
+nserverscentos = ENV['numserverscentos'] || "1"
+nserverscentos = nserverscentos.to_i
+
+nserversdebian = ENV['numserversdebian'] || "1"
+nserversdebian = nserversdebian.to_i
+
+serverscentos = Hash.new
+(1..nserverscentos).each do |i|
+    servernamecentos = "centos%02d" % i
+    octet = i + 50
+    serverscentos[servernamecentos] = {
+      ip: "192.168.122.#{octet}"
+    }
+end
+
+serversdebian = Hash.new
+(1..nserversdebian).each do |i|
+    servernamedebian = "debian%02d" % i
+    octet = i + 100
+    serversdebian[servernamedebian] = {
+      ip: "192.168.122.#{octet}"
+    }
+end
+
+
+Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
+  (1..nserverscentos).each do |i|
+      servernamecentos = "centos%02d" % i
+      config.vm.define servernamecentos do |sv1|
+        sv1.vm.provider "virtualbox"
+        sv1.vm.box = "centos/7"
+        sv1.vm.synced_folder ".", "/vagrant", type: "rsync"
+        sv1.vm.hostname = servernamecentos
+        sv1.vm.network "private_network", ip: serverscentos [servernamecentos][:ip]
+        sv1.vm.provision "shell",
+          inline: "sudo yum update -y && sudo yum install -y python"
+        sv1.vm.provision "ansible" do |ansible|
+          ansible.playbook = "playbook_vagrant.yaml"
+          ansible.verbose = true
+          ansible.raw_arguments = ["--vault-id", "vault_pass"]
+          ansible.extra_vars = {
+            serverscentos: serverscentos
+          }
+        end
+      end
+  end
+
+  (1..nserversdebian).each do |i|
+      servernamedebian = "debian%02d" % i
+      config.vm.define servernamedebian do |sv2|
+        sv2.vm.provider "virtualbox"
+        sv2.vm.box = "debian/stretch64"
+        sv2.vm.synced_folder ".", "/vagrant", type: "rsync"
+        sv2.vm.hostname = servernamedebian
+        sv2.vm.network "private_network", ip: serversdebian [servernamedebian][:ip]
+        sv2.vm.provision "shell",
+          inline: "sudo apt-get update -y && sudo apt install -y python"
+        sv2.vm.provision "ansible" do |ansible|
+          ansible.playbook = "playbook_vagrant.yaml"
+          ansible.verbose = true
+          ansible.raw_arguments = ["--vault-id", "vault_pass"]
+          ansible.extra_vars = {
+            serversdebian: serversdebian
+          }
+        end
+      end
+  end
+end

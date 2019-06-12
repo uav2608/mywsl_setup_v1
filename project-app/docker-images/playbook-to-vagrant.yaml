@@ -1,0 +1,31 @@
+---
+
+- hosts: vagrant
+  gather_facts: yes
+  become: yes
+  vars_files:
+    - ../group_vars/all/vars.yaml
+
+  roles:
+#    - ../roles/npm
+    - ../roles/react-app
+#    - ../roles/python3
+#    - ../roles/pip
+    - ../roles/flask-app
+
+#  tasks:
+
+#  - name: run NPM app
+#    shell: /usr/src/app/react/npm start 
+#    register: npm_results
+
+#  - debug: msg="{{ npm_results.stdout_lines }} is running"
+
+#  - name: export Flask path
+#    shell: export FLASK_APP=hallo.py
+
+#  - name: run Flask app
+#    shell: /usr/src/app/flask/flask run &
+#    register: flask_results
+
+#  - debug: msg="{{ flask_results.stdout_lines }} is running"

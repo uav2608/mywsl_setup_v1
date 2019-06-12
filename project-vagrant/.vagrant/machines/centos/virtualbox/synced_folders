@@ -1,0 +1,1 @@
+{"rsync":{"/vagrant":{"type":"rsync","guestpath":"/vagrant","hostpath":"/home/devuser/project-vagrant","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"},"/usr/src/app":{"type":"rsync","guestpath":"/usr/src/app","hostpath":"/home/devuser/projects","disabled":false,"__vagrantfile":true,"owner":"vagrant","group":"vagrant"}}}

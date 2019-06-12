@@ -1,0 +1,60 @@
+---
+# tasks file for flask-app
+
+- name: Create WORKDIR
+  file:
+    path: /usr/src/app/flask
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- block:
+  - name: Install tar, rsync and sudo (Alpine)
+    apk:
+       name: "{{item}}"
+       state: present
+       update_cache: yes
+    loop:
+       - rsync
+       - sudo
+       - tar     
+  when: ansible_os_family == "Alpine"
+
+- block:
+  - name: Install rsync and sudo (Debian)
+    apt:
+      name: "{{item}}"
+      state: present
+    loop:
+      - rsync
+      - sudo
+  when: ansible_facts['os_family'] == "Debian"
+
+- block:
+  - name: Install rsync and sudo (Centos)
+    yum:
+      name: "{{item}}"
+      state: present
+    loop:
+      - rsync
+      - sudo
+  when: ansible_facts['os_family'] == "RedHat"
+
+#- name: Unarchive project files
+#  unarchive:
+#     src: app-flask.tar.gz
+#     dest: /usr/src/app/flask
+
+- name: Unarchive project files
+  unarchive:
+     src: flask_box.tar.gz
+     dest: /usr/src/app/flask
+
+- name: Install flask packages
+  shell: pip3.7 install -r /usr/src/app/flask/requirements.txt
+  register: pip_result
+  until: pip_result is success
+  retries: 5
+  delay: 5
+
