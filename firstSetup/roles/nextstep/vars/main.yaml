@@ -30,7 +30,6 @@ initial_packages_centos:
   - curl
 
 initial_packages_debian:
-  - nfs*
   - vim
   - net-tools
   - wget

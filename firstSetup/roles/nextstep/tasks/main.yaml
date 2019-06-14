@@ -31,6 +31,7 @@
       name: "{{ item }}"
       state: present
     loop: "{{ initial_packages_centos }}"
+    ignore_errors: yes
 
   - name: Disallow root SSH access (Centos)
     lineinfile:
@@ -79,6 +80,7 @@
       name: "{{ item }}"
       state: present
     loop: "{{ initial_packages_debian }}"
+    ignore_errors: yes
 
   - name: Disallow root SSH access (Debian)
     lineinfile:

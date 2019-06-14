@@ -3,8 +3,6 @@
   connection: local
   gather_facts: yes
   become: true
-#  become_method: su
-#  become_user: root
   roles:
     - role: firstsetup
       vars:

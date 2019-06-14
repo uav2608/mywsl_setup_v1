@@ -1,27 +1,5 @@
 ---
 # Vagrant and Packer packages
-vagrant_packages_centos: 
-  - qemu-kvm
-  - qemu-img
-  - virt-manager
-  - libvirt
-  - libvirt-python
-  - libvirt-client
-  - virt-install
-  - virt-viewer
-  - bridge-utils
-  - libguestfs-tools
-
-vagrant_packages_debian:
-  - qemu-kvm 
-  - libvirt0
-  - libvirt-clients 
-  - libvirt-daemon-system 
-  - bridge-utils 
-  - libguestfs-tools 
-  - genisoimage 
-  - virtinst 
-  - libosinfo-bin
         
 #current_user  : ansibleuser2
 vagrant_version : 2.2.4

@@ -9,7 +9,7 @@
 - block:
   - name: Make sure to have Wheel and docker group (Centos)
     group:
-      name: {{item}}
+      name: "{{item}}"
       state: present
     loop:
       - wheel
@@ -29,6 +29,11 @@
       line: '%wheel ALL=(ALL) NOPASSWD: ALL'
       validate: '/usr/sbin/visudo -cf %s'
 
+  - name: Install SSH (Centos)
+    yum:
+      name: sshd
+      state: present
+
   - name: Enable SSH (Centos)
     service:
       name: sshd
@@ -41,7 +46,7 @@
 
   - name: Make sure to have Sudo and docker group (Debian)
     group:
-      name: {{item}}
+      name: "{{item}}"
       state: present
     loop:
       - sudo
@@ -60,6 +65,11 @@
       regexp: '^%sudo\s'
       line: '%sudo ALL=(ALL) NOPASSWD: ALL'
       validate: '/usr/sbin/visudo -cf %s'
+
+  - name: install SSH (Debian)
+    apt:
+      name: ssh
+      state: present
 
   - name: Enable SSH (Debian)
     service:
