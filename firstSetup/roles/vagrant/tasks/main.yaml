@@ -5,11 +5,11 @@
     yum:
       name: "{{ item }}"
       state: present
-    loop: "{{ vagrant_packages }}"
+    loop: "{{ vagrant_packages_centos }}"
 
   - name: installing Vagrant (Centos)
     yum:
-      name: https://releases.hashicorp.com/vagrant/1.9.6/vagrant_1.9.6_x86_64.rpm
+      name: https://releases.hashicorp.com/vagrant/{{vagrant_version}}/vagrant_{{vagrant_version}}_x86_64.rpm
       state: present
 
   when: ansible_os_family == "RedHat"
@@ -21,11 +21,11 @@
     apt:
       name: "{{ item }}"
       state: present
-    loop: "{{ vagrant_packages }}"
+    loop: "{{ vagrant_packages_debian }}"
 
   - name: installing Vagrant (Debian)
     apt:
-      name: https://releases.hashicorp.com/vagrant/1.9.6/vagrant_1.9.6_x86_64.rpm
+      name: https://releases.hashicorp.com/vagrant/{{vagrant_version}}/vagrant_{{vagrant_version}}_x86_64.rpm
       state: present
 
   when: ansible_os_family == "Debian"
@@ -40,11 +40,11 @@
 - name: Add the current user to libvirt group
   user:
       name: "{{ item }}"
-      groups: libvirt
+      groups: libvirt, libvirt-qemu
       append: yes
   loop:
     - "{{ ansible_user }}"
-    - "{{ current_user }}" 
+#    - "{{ current_user }}" 
 
 - name: installing vagrant-libvirt plugin
   become: no

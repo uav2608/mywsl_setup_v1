@@ -7,3 +7,7 @@
 [deb]
 192.168.121.101 
 
+[children:vagrant]
+centos
+deb
+

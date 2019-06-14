@@ -7,15 +7,19 @@
       shell: /bin/bash
 
 - block:
-  - name: Make sure to have Wheel group (Centos)
+  - name: Make sure to have Wheel and docker group (Centos)
     group:
-      name: wheel
+      name: {{item}}
       state: present
+    loop:
+      - wheel
+      - docker
 
-  - name: Add user to Wheel group (Centos)
+  - name: Add user to Wheel and docker group (Centos)
     user:
       name: "{{ current_user }}"
-      groups: wheel
+      groups: wheel, docker
+      append: yes
 
   - name: Update sudoer file (Centos)
     lineinfile:
@@ -35,15 +39,19 @@
 
 - block:
 
-  - name: Make sure to have Sudo group (Debian)
+  - name: Make sure to have Sudo and docker group (Debian)
     group:
-      name: sudo
+      name: {{item}}
       state: present
-
+    loop:
+      - sudo
+      - docker
+        
   - name: Add user to Sudo group (Debian)
     user:
       name: "{{ current_user }}"
-      groups: sudo
+      groups: sudo, docker
+      append: yes
 
   - name: Update sudoer file (Debian)
     lineinfile:
@@ -89,11 +97,11 @@
       path: /home/{{ current_user }}/.ssh/authorized_keys
       state: present
       line: "{{ auth_key_initial }}"
-      ignore_errors: yes
+  ignore_errors: yes
 
 - name: Copy authorized_keys
   lineinfile:
       path: /home/{{ current_user }}/.ssh/authorized_keys
       state: present
       line: "{{ auth_key_second }}"
-      ignore_errors: yes
+  ignore_errors: yes

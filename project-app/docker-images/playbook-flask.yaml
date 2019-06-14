@@ -20,16 +20,3 @@
       vars:
          flask_project_name  : flask-app1
 
-- hosts: vagrant
-  gather_facts: yes
-  become: yes
-  vars_files:
-    - ../group_vars/all/vars.yaml
-
-  roles:
-    - ../roles/python3
-    - ../roles/pip
-    - role: ../roles/flask-app
-      vars:
-         flask_project_name  : flask-app1
-

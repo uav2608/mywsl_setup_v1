@@ -1,0 +1,77 @@
+---
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  become: true
+#  become_method: su
+#  become_user: root
+  roles:
+    - role: firstsetup
+      vars:
+        - current_user: devuser
+
+- hosts: 127.0.0.1
+  connection: local
+  gather_facts: yes
+  remote_user: devuser
+  become: true
+
+  roles:
+    - nextstep
+    - packer
+    - docker
+    - npm
+    - python3
+    - pip
+    - vagrant
+ 
+  tasks:
+
+  - name: debuging docker
+    shell: docker --version
+    register: docker_info
+
+  - name: docker-info
+    debug:
+      msg: "{{ docker_info.stdout }}"
+
+  - name: debuging docker-compose
+    shell: docker-compose --version
+    register: docker_compose_info
+
+  - name: docker-compose-info
+    debug:
+      msg: "{{ docker_compose_info.stdout }}"
+
+  - name: debuging packer
+    shell: /usr/local/packer --version
+    register: packer_info
+
+  - name: packer-info
+    debug:
+      msg: "{{ packer_info.stdout }}"
+
+  - name: debuging vagrant
+    shell: vagrant --version
+    register: vagrant_info
+
+  - name: vagrant-info
+    debug:
+      msg: "{{ vagrant_info.stdout }}"
+
+  - name: debuging python3
+    shell: python3.7 --version  
+    register: python3_info
+
+  - name: python3-info
+    debug:
+      msg: "{{ python3_info.stdout }}"
+
+  - name: debuging pip3
+    shell: pip3.7 --version
+    register: pip3_info
+
+  - name: pip3-info
+    debug:
+      msg: "{{ pip3_info.stdout }}"
+

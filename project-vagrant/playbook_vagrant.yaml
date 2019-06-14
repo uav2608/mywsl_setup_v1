@@ -1,15 +1,21 @@
 ---
 
-- hosts: all
+- hosts: vagrant
   gather_facts: yes
   remote_user: vagrant
   become: yes
   roles:
-    - ../firstSetup/roles/firstSetupOthers
+    - role: ../firstSetup/roles/firstsetup
+      var: 
+       - current_user: john1010
 
-- hosts: all
+- hosts: vagrant
   gather_facts: yes
   remote_user: john1010
   become: true
   roles:
     - ../firstSetup/roles/nextstep
+    - ../firstSetup/roles/npm
+    - ../firstSetup/roles/python3
+    - ../firstSetup/roles/pip
+

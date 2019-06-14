@@ -21,17 +21,4 @@
       vars:
          react_project_name  : todo-app1
 
-- hosts: vagrant
-  gather_facts: yes
-  become: yes
-  vars_files:
-    - ../group_vars/all/vars.yaml
-
-  roles:
-    - ../roles/npm
-    - role: ../roles/react-app
-      vars:
-         react_project_name  : todo-app1
-
-
 
