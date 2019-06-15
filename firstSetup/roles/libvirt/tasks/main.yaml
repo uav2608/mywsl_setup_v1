@@ -33,10 +33,24 @@
       groups: libvirt, libvirt-qemu
       append: yes
   loop:
-    - "{{ ansible_user }}"
-#    - "{{ current_user }}" 
+    - "{{ current_user }}"
 
-- name: installing vagrant-libvirt plugin
+#- name: installing vagrant-libvirt plugin
+#  become: no
+#  shell: vagrant plugin install vagrant-libvirt
+
+- name: Create folder for ISO
   become: no
-  shell: vagrant plugin install vagrant-libvirt
+  file:
+      path: ~/ISO
+      state: directory
+      mode: 0755
+      owner: "{{ current_user }}"
 
+- name: Download images
+  become: no
+  get_url:
+      url: "{{ item }}"
+      dest: ~/ISO/
+      mode: '0666'
+  loop: "{{ kvm_packages2 }}"            

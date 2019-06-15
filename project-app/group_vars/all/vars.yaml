@@ -1,5 +1,5 @@
 ---
-base_path           : home/ansibleuser1/project-app
+base_path           : home/devuser
 development_path    : projects
 
 #Flask

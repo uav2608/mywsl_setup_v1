@@ -41,15 +41,15 @@
       - sudo
   when: ansible_facts['os_family'] == "RedHat"
 
+- name: Synchronization using rsync protocol (push)
+  synchronize:
+    src: /{{base_path}}/{{development_path}}/{{flask_project_path}}
+    dest: rsync:///usr/src/app/flask
+
 #- name: Unarchive project files
 #  unarchive:
 #     src: app-flask.tar.gz
 #     dest: /usr/src/app/flask
-
-- name: Unarchive project files
-  unarchive:
-     src: flask_box.tar.gz
-     dest: /usr/src/app/flask
 
 - name: Install flask packages
   shell: pip3.7 install -r /usr/src/app/flask/requirements.txt

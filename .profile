@@ -25,3 +25,4 @@ fi
 if [ -d "$HOME/.local/bin" ] ; then
     PATH="$HOME/.local/bin:$PATH"
 fi
+PATH=/home/devuser/.local/bin:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games

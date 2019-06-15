@@ -1,0 +1,29 @@
+---
+# tasks file for apps
+
+- name: Create WORKDIR (React)
+  file:
+    path: /{{base_path}}/{{development_path}}/{{react_project_path}}
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Unarchive project files
+  unarchive:
+    src: app-react.tar.gz
+    dest: /{{base_path}}/{{development_path}}/{{react_project_path}}
+
+
+- name: Create WORKDIR (Flask)
+  file:
+    path: /{{base_path}}/{{development_path}}/{{flask_project_path}}
+    state: directory
+    owner: root
+    group: root
+    mode: 0775
+
+- name: Unarchive project files
+  unarchive:
+    src: app-flask.tar.gz
+    dest: /{{base_path}}/{{development_path}}/{{flask_project_path}}

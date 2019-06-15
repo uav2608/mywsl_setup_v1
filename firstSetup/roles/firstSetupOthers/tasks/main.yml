@@ -16,7 +16,7 @@
 
   - name: Add user to Wheel group (Centos)
     user:
-      name: "{{ nonpriv_user }}"
+      name: "{{ current_user }}"
       groups: wheel
 
   - name: Update sudoer file (Centos)
@@ -43,7 +43,7 @@
 
   - name: Add user to Sudo group (Debian)
     user:
-      name: "{{ nonpriv_user }}"
+      name: "{{ current_user }}"
       groups: sudo
 
   - name: Update sudoer file (Debian)
@@ -64,29 +64,29 @@
 
 - name: create a .ssh directory if it doesn't exist
   file:
-      path:  /home/{{ nonpriv_user }}/.ssh
+      path:  /home/{{ current_user }}/.ssh
       state: directory
-      owner: "{{ nonpriv_user }}"
-      group: "{{ nonpriv_user }}"
+      owner: "{{ current_user }}"
+      group: "{{ current_user }}"
       mode: 0700
 
 - name: create file
   file:
-      path: /home/{{ nonpriv_user }}/.ssh/authorized_keys
+      path: /home/{{ current_user }}/.ssh/authorized_keys
       state: touch
-      owner: "{{ nonpriv_user }}"
-      group: "{{ nonpriv_user }}"
+      owner: "{{ current_user }}"
+      group: "{{ current_user }}"
       mode: 0644
 
 - name: Copy authorized_keys
   lineinfile:
-      path: /home/{{ nonpriv_user }}/.ssh/authorized_keys
+      path: /home/{{ current_user }}/.ssh/authorized_keys
       state: present
       line: "{{ auth_key_initial }}"
 
 - name: Copy authorized_keys
   lineinfile:
-      path: /home/{{ nonpriv_user }}/.ssh/authorized_keys
+      path: /home/{{ current_user }}/.ssh/authorized_keys
       state: present
       line: "{{ auth_key_second }}"
 

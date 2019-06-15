@@ -22,5 +22,8 @@ vagrant_packages_debian:
   - genisoimage 
   - virtinst 
   - libosinfo-bin
-        
+
+kvm_packages2:
+      - "https://cdimage.kali.org/kali-2019.1a/kali-linux-xfce-2019.1a-amd64.iso"
+    
 #current_user  : ansibleuser2

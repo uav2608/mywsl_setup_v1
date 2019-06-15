@@ -127,3 +127,5 @@ env/*
 !/.curlrc
 !.gitlab*
 !.gitignore_global
+!app-react.tar.gz
+!app-flask.tar.gz

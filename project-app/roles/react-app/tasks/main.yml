@@ -41,13 +41,13 @@
       - sudo
   when: ansible_facts['os_family'] == "RedHat"
 
-- name: Unarchive project files
-  unarchive:
-    src: app-react.tar.gz
-    dest: /usr/src/app/react
+- name: Synchronization using rsync protocol (push)
+  synchronize:
+    src: /{{base_path}}/{{development_path}}/{{react_project_path}}
+    dest: rsync:///usr/src/app/react
 
 #- name: Unarchive project files
 #  unarchive:
-#    src: react_box.tar.gz
+#    src: app-react.tar.gz
 #    dest: /usr/src/app/react
 
