@@ -1,13 +1,14 @@
 {
   "builders": [
     {
-      "name": "docker",
+      "name": "{{user `BUILD_NAME`}}",
       "type": "docker",
       "image": "{{user `MYIMAGE`}}",
       "commit": "true",
       "run_command": ["-d", "-i", "-t", "{{.Image}}", "/bin/sh"],
       "changes": [
-         "{{user `WORKDIR`}}"
+         "{{user `WORKDIR`}}",
+         "{{user `EXPOSE`}}"
       ]
     }
    ],
@@ -16,7 +17,7 @@
     {
       "type": "shell",
       "inline": [
-        "apk add g++ make python -y"
+        "apk add g++ make python"
        ]
     },
     {
@@ -24,7 +25,7 @@
       "user": "root",
       "playbook_file": "{{user `FILENAME`}}",
       "extra_arguments": [
-         "-v"
+	 "-v"
        ]
     }
    ],

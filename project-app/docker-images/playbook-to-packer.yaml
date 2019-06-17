@@ -17,11 +17,17 @@
   vars_files:
     - ../group_vars/all/vars.yaml
 
+  tasks:
+    - debug: 
+         msg: "Packer variables: {{packer_build_name}}"
+
   roles:
     - role: ../roles/react-app
       vars:
          react_project_name  : react-app1
+      when: packer_build_name == "react_img"  
 
     - role: ../roles/flask-app
       vars:
          flask_project_name  : flask-app1
+      when: packer_build_name == "flask_img"

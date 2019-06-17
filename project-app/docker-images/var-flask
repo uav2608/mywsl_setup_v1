@@ -1,8 +1,10 @@
 {
   "MYIMAGE"	: "python:3.7.2-alpine",
+  "BUILD_NAME"  : "flask_img",
   "WORKDIR"	: "WORKDIR /usr/src/app",
-  "CMD"		: "CMD [\"python3.6\", \"manage.py\", \"runserver\", \"-h\", \"0.0.0.0\"]",
-  "FILENAME"	: "playbook-flask.yaml",
+  "EXPOSE"      : "EXPOSE 5000 5000",
+  "CMD"		: "CMD [\"python3.7\", \"manage.py\", \"runserver\", \"-h\", \"0.0.0.0\"]",
+  "FILENAME"	: "playbook-to-packer.yaml",
   "IMAGENAME"	: "uav2608/flask",
   "MYTAG"	: "0.0.2"
 }

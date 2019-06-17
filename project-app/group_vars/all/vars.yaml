@@ -1,6 +1,7 @@
 ---
 base_path           : home/devuser
 development_path    : projects
+dest_path           : usr/src/app
 
 #Flask
 flask_image         : 'uav2608/flask:0.0.2'
