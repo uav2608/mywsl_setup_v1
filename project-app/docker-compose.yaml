@@ -1,0 +1,22 @@
+version: '3.4'
+services:
+  reactapp:
+     image: uav2608/react:0.0.2
+     network_mode: host
+     volumes:
+       - /home/devuser/projects/react-app1:/usr/src/app
+     command: "npm start"
+     expose:
+       - 3000
+     ports:
+       - 3000:3000
+  flaskapp:
+     image: uav2608/flask:0.0.2
+     network_mode: host
+     volumes:
+       - /home/devuser/projects/flask-app1:/usr/src/app
+     command: "python main.py"
+     expose:
+       - 5000
+     ports:
+       - 5000:5000
